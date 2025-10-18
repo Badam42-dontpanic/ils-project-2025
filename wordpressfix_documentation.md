@@ -11,19 +11,25 @@ This solution was not found by me. I helped with theorizing what the eventual so
 Solution 1 involves going into your MySQL as the root user and looking at the database for Wordpress to change the data in the "wp_options" table.
 
 First, log into MySQL as the root user and USE the wordpress database.
+
 `sudo mysql -u root`
+
 `USE "name_of_wordpress_database";`
 
 You can see that Wordpress is looking for the wrong IP address by selecting the data in the wp_options table.
+
 `SELECT * FROM wp_options WHERE option_name IN ('siteurl', 'home');`
 
 By editing the option value, we can change the IP address that Wordpress is expecting.
+
 `UPDATE wp_options SET option_value='http://<correct_IP>' WHERE option_name = 'siteurl' OR option_name = 'home';`
 
 Confirm that the IP address is correct by selecting the data again.
+
 `SELECT * FROM wp_options WHERE option_name IN ('siteurl', 'home');`
 
 Exit MySQL
+
 `\q`
 
 This solution works best if you do not plan on changing the external IP address again, or if you don't want to go into the Wordpress configurations. 
@@ -34,12 +40,15 @@ This solution works best if you do not plan on changing the external IP address 
 Solution 2 involves editing the wp-config.php file in your Wordpress directory to expect a dynamic IP address.
 
 First, open the wp-config.php file.
+
 `sudo nano /var/www/html/wordpress/wp-config.php`
 
 Note: instead of nano, you can use your editor of your choice, like vim. 
 
 At the bottom of the file, paste these two lines of code. They will change what site URL and HOME that Wordpress is looking for.
+
 `define('WP_Home', '/wordpress/');`
+
 `define('WP_SITEURL', '/wordpress/');`
 
 Now, wordpress will not be looking for one specfic IP.
