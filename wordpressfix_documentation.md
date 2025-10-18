@@ -35,11 +35,13 @@ Solution 2 involves editing the wp-config.php file in your Wordpress directory t
 
 First, open the wp-config.php file.
 `sudo nano /var/www/html/wordpress/wp-config.php`
+
 Note: instead of nano, you can use your editor of your choice, like vim. 
 
 At the bottom of the file, paste these two lines of code. They will change what site URL and HOME that Wordpress is looking for.
 `define('WP_Home', '/wordpress/');`
 `define('WP_SITEURL', '/wordpress/');`
+
 Now, wordpress will not be looking for one specfic IP.
 
 Save and exit the file.
